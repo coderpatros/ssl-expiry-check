@@ -2,7 +2,7 @@
 
 A quick and dirty, but so far functional, script to check SSL certificate expiry.
 
-## Usage
+## DNS entries
 
 The script reads a file `dns.txt` and checks the SSL certificate expiry for all
 listed host names.
@@ -25,24 +25,15 @@ It will also handle standard DNS entry text like this...
     example2.com. 3600 IN CNAME example.com.
 ```
 
-It does require the Python OpenSSL module. A quick `pip install pyopenssl`
-should take care of it.
+## Usage
 
-After that a `python3 ssl_expiry_check.py` should run the checks.
+    docker build --tag ssl-expiry-check .
+    docker run -v `pwd`:/files -it ssl-expiry-check
 
-## Outputs
+Or just execute `run.cmd` which will run the two commands above.
 
-During the checks results will be printed to the console. In addition several
-result files are generated.
+## Output
 
-`expired.txt` contains a list of host names with expired certificates.  
-`expiring-soon.txt` contains a list of host names with certificates expiring
-within 120 days.  
-`ok.txt` contains a list of host names with certificates that don't expire
-within 120 days.  
-`failed-checks.txt` contains a list of host names that couldn't be checked
-successfully. This could be because the host doesn't have SSL enabled or the
-host isn't online.
+All output will be displayed in the console and written to `output.csv`.
 
-The result files are only ever appended to. So you should delete them manually
-between runs.
+`output.csv` is only appended to. So you need to delete it to start a clean run.
